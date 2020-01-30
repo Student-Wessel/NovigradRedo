@@ -16,20 +16,23 @@ public class GenerateBuilding : MonoBehaviour
 
     GameObject buildWallObject;
 
-
-
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
-        System.Random rand = new System.Random(1);
-        int sizeX = rand.Next(3, 6);
-        int sizeZ = rand.Next(3, 6);
+        System.Random rand = new System.Random();
+        int sizeX = rand.Next(2, 10);
+        int sizeZ = rand.Next(2, 10);
         int floors = rand.Next(2, 10);
-        int windows = rand.Next(4, 10);
+        int windows = rand.Next(4, 7);
         GameObject randomWindow = randomWindows[rand.Next(randomWindows.Length)];
 
+
+        GameObject myParent = new GameObject("House");
+        myParent.transform.position = new Vector3(0, 0 ,0);
+        myParent.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
 
         buildWallObject = defaultWall;
@@ -48,8 +51,10 @@ public class GenerateBuilding : MonoBehaviour
                 if (buildWallObject != null)
                 {
                     
-                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, 0), Quaternion.Euler(0, 90, 0));
-                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, sizeZ), Quaternion.Euler(0, -90, 0));
+                    GameObject WallX = Instantiate(buildWallObject, new Vector3(x, floor, 0), Quaternion.Euler(0, 180, 0));
+                    GameObject WallZ = Instantiate(buildWallObject, new Vector3(x, floor, sizeZ), Quaternion.Euler(0, 0, 0));
+                    WallX.transform.SetParent(myParent.transform);
+                    WallZ.transform.SetParent(myParent.transform);
                 }
 
 
@@ -65,8 +70,10 @@ public class GenerateBuilding : MonoBehaviour
                 if (buildWallObject != null)
                 {
 
-                    Instantiate(buildWallObject, new Vector3(0, floor * 0.6f, z), Quaternion.Euler(0, 180, 0));
-                    Instantiate(buildWallObject, new Vector3(sizeX, floor * 0.6f, z), Quaternion.Euler(0, 270, 0));
+                    GameObject WallX = Instantiate(buildWallObject, new Vector3(0 - 0.5f, floor, z + 0.5f), Quaternion.Euler(0, 270, 0));
+                    GameObject WallZ = Instantiate(buildWallObject, new Vector3(sizeX - 0.5f, floor, z + 0.5f), Quaternion.Euler(0, 90, 0));
+                    WallX.transform.SetParent(myParent.transform);
+                    WallZ.transform.SetParent(myParent.transform);
                 }
                 else { throw new ArgumentException("Parameter cannot be null", "NullPointerException"); }
 
@@ -79,11 +86,13 @@ public class GenerateBuilding : MonoBehaviour
         {
             for (int z = 0; z < sizeZ; z++)
             {
-                //Instantiate(defaultRoof, new Vector3(x, floors * 0.6f, z), Quaternion.Euler(0, 0, 0));
+                GameObject Roof = Instantiate(defaultRoof, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                Roof.transform.SetParent(myParent.transform);
             }
         }
 
     }
+
 
 
     // Update is called once per frame

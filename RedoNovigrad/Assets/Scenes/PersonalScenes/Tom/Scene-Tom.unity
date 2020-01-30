@@ -164,16 +164,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomWindows:
-  - {fileID: 7700403800072721313, guid: 43084c910cf536349abd9d6b3944b9cd, type: 3}
-  - {fileID: 9141760531293565670, guid: f1eb737a1722d0446826f9cffc303339, type: 3}
-  - {fileID: 7260927365066783108, guid: c320e9f2cb1885043839cb77c471fa94, type: 3}
-  - {fileID: 5233690750090893875, guid: 75c27df96e717bc48b9b16c9222d116b, type: 3}
-  - {fileID: 2422813412890383361, guid: d6db474fd358e57488976630d4d59980, type: 3}
-  defaultDoorway: {fileID: 8884896311494596198, guid: 6a6d49da654fde847afceda54b26d1e4,
+  - {fileID: 4615622031772076570, guid: a2fc356992b122e4aaf1530424dd7bc4, type: 3}
+  - {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4, type: 3}
+  defaultDoorway: {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4,
     type: 3}
-  defaultWall: {fileID: 7603148389240612312, guid: d3afc7ecded89a7429f33d191818f298,
+  defaultWall: {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4,
     type: 3}
-  defaultRoof: {fileID: 706195125289125000, guid: 54ed656230b13fd418363f71d8365874,
+  defaultRoof: {fileID: 2269847027802496528, guid: 67e0f38149269fa4f9aad7027efb9793,
     type: 3}
 --- !u!1 &1003910451
 GameObject:
