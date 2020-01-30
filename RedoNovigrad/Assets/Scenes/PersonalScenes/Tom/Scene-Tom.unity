@@ -172,6 +172,9 @@ MonoBehaviour:
     type: 3}
   defaultRoof: {fileID: 2269847027802496528, guid: 67e0f38149269fa4f9aad7027efb9793,
     type: 3}
+  roofPiece: {fileID: 4196995900239680308, guid: 4f334d04015e3fc4ba6da0257d769cff,
+    type: 3}
+  Koob: {fileID: 342147471977299670, guid: fdd90742b469f034d917140349dd5bfa, type: 3}
 --- !u!1 &1003910451
 GameObject:
   m_ObjectHideFlags: 0
