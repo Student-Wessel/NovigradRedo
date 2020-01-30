@@ -47,8 +47,9 @@ public class GenerateBuilding : MonoBehaviour
 
                 if (buildWallObject != null)
                 {
-                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, 0), Quaternion.Euler(0, 0, 0));
-                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, sizeZ), Quaternion.Euler(0, 0, 0));
+                    
+                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, 0), Quaternion.Euler(0, 90, 0));
+                    Instantiate(buildWallObject, new Vector3(x, floor * 0.6f, sizeZ), Quaternion.Euler(0, -90, 0));
                 }
 
 
@@ -64,8 +65,8 @@ public class GenerateBuilding : MonoBehaviour
                 if (buildWallObject != null)
                 {
 
-                    Instantiate(buildWallObject, new Vector3(0, floor * 0.6f, z), Quaternion.Euler(0, 90, 0));
-                    Instantiate(buildWallObject, new Vector3(sizeX, floor * 0.6f, z), Quaternion.Euler(0, 90, 0));
+                    Instantiate(buildWallObject, new Vector3(0, floor * 0.6f, z), Quaternion.Euler(0, 180, 0));
+                    Instantiate(buildWallObject, new Vector3(sizeX, floor * 0.6f, z), Quaternion.Euler(0, 270, 0));
                 }
                 else { throw new ArgumentException("Parameter cannot be null", "NullPointerException"); }
 
@@ -78,7 +79,7 @@ public class GenerateBuilding : MonoBehaviour
         {
             for (int z = 0; z < sizeZ; z++)
             {
-                Instantiate(defaultRoof, new Vector3(x, floors * 0.6f, z), Quaternion.Euler(0, 0, 0));
+                //Instantiate(defaultRoof, new Vector3(x, floors * 0.6f, z), Quaternion.Euler(0, 0, 0));
             }
         }
 
