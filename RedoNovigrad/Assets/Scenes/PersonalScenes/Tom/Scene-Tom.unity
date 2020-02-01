@@ -165,16 +165,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomWindows:
   - {fileID: 4615622031772076570, guid: a2fc356992b122e4aaf1530424dd7bc4, type: 3}
-  - {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4, type: 3}
-  defaultDoorway: {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4,
+  - {fileID: 4615622031772076570, guid: a2fc356992b122e4aaf1530424dd7bc4, type: 3}
+  - {fileID: 4615622031772076570, guid: a2fc356992b122e4aaf1530424dd7bc4, type: 3}
+  - {fileID: 4092795406135954492, guid: 6cca6dd23cdc23a47bdc434b2b5f367b, type: 3}
+  defaultDoorway: {fileID: 6144045551198681319, guid: e6dbee12bc5f1b24380852502c05e4e6,
     type: 3}
   defaultWall: {fileID: 793013436624673745, guid: d782f4d7436e2d34bb2ef8db6f49ffc4,
     type: 3}
   defaultRoof: {fileID: 2269847027802496528, guid: 67e0f38149269fa4f9aad7027efb9793,
     type: 3}
-  roofPiece: {fileID: 4196995900239680308, guid: 4f334d04015e3fc4ba6da0257d769cff,
+  roofPiece: {fileID: 3282960236964192637, guid: 52cbb37dcb7de6f42b265278d77aa59c,
     type: 3}
   Koob: {fileID: 342147471977299670, guid: fdd90742b469f034d917140349dd5bfa, type: 3}
+  _roofOffset: -1
 --- !u!1 &1003910451
 GameObject:
   m_ObjectHideFlags: 0
