@@ -31,12 +31,14 @@ public class GenerateBuilding : MonoBehaviour
         int sizeZ = rand.Next(2, 4);
         int floors = rand.Next(2, 4);
         int windows = rand.Next(4, 7);
-        GameObject randomWindow = randomWindows[rand.Next(randomWindows.Length)];
-        
+        GameObject randomWindow = randomWindows[rand.Next(randomWindows.Length)];        
 
         GameObject myParent = new GameObject("House");
         GameObject roof = new GameObject("Roof");
         GameObject Walls = new GameObject("Walls");
+        BoxCollider houseCollider = (BoxCollider)myParent.gameObject.AddComponent(typeof(BoxCollider));
+        houseCollider.center = myParent.transform.position + new Vector3(sizeX / 2, (floors + 1) / 2, sizeZ / 2);
+        houseCollider.size = new Vector3(sizeX, floors + 1, sizeZ);
         roof.transform.SetParent(myParent.transform);
         Walls.transform.SetParent(myParent.transform);
 
@@ -111,86 +113,169 @@ public class GenerateBuilding : MonoBehaviour
                 if (sizeX > sizeZ)
                 {
 
+                    if (sizeX % 2 == 1)
+                    {
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
+                    }else if (sizeX % 2 == 0)
+                    {
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                    }
 
-                    if (z == 0)
-                    {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }
-                    if (z > sizeZ - 2)
-                    {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }else if (z < sizeZ / 2 && z > 0)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
-                        Roof.transform.SetParent(roof.transform);
-                    }else if (z >= sizeZ / 2 && z < sizeZ - 1)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }
+
+
+
 
                 }
                 else if (sizeZ > sizeX)
                 {
-                    //Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 90, 0));
 
-                    if (z == 0)
+                    if (sizeZ % 2 == 1)
                     {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }
-                    if (z > sizeZ - 2)
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
+                    }else if (sizeZ % 2 == 0)
                     {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
                     }
-                    else if (z < sizeZ / 2 && z > 0)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
-                        Roof.transform.SetParent(roof.transform);
-                    }
-                    else if (z >= sizeZ / 2 && z < sizeZ - 1)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }
+
                 }
                 else if (sizeZ == sizeX)
                 {
-                    if (z == 0)
+                    if (sizeZ % 2 == 1 || sizeX % 2 == 1)
                     {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
-                        Roof.transform.SetParent(roof.transform);
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                        }
                     }
-                    if (z > sizeZ - 2)
+                    else if (sizeZ % 2 == 0 || sizeX % 2 == 0)
                     {
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
+                        if (z == 0)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 180, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        if (z > sizeZ - 2)
+                        {
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z < sizeZ / 2 && z > 0)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
+                            Roof.transform.SetParent(roof.transform);
+                        }
+                        else if (z >= sizeZ / 2 && z < sizeZ - 1)
+                        {
+                            GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Block.transform.SetParent(roof.transform);
+                            GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
+                            Roof.transform.SetParent(roof.transform);
+                        }
                     }
-                    else if (z < sizeZ / 2 && z > 0)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(new Vector3(0, 180, 0)));
-                        Roof.transform.SetParent(roof.transform);
-                    }
-                    else if (z >= sizeZ / 2 && z < sizeZ - 1)
-                    {
-                        GameObject Block = Instantiate(Koob, new Vector3(x, floors, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Block.transform.SetParent(roof.transform);
-                        GameObject Roof = Instantiate(roofPiece, new Vector3(x, floors + 1, z + 0.5f), Quaternion.Euler(0, 0, 0));
-                        Roof.transform.SetParent(roof.transform);
-                    }
+
+
                 }
             }
         }
