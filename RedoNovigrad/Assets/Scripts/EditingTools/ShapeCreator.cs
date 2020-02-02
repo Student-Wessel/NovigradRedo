@@ -1,8 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class ShapeCreator : MonoBehaviour
 {
+    // Building gen stuff
+    [SerializeField]
+    public GameObject[] randomWindows = new GameObject[5];
+    [SerializeField]
+    public GameObject defaultDoorway;
+    [SerializeField]
+    public GameObject defaultWall;
+    [SerializeField]
+    public GameObject defaultRoof;
+    [SerializeField]
+    public GameObject roofPiece;
+    [SerializeField]
+    public GameObject Koob;
+    [SerializeField]
+    public GameObject roofCenterPiece;
+    [SerializeField]
+    public float _roofOffset = -1.0f;
+
+    public GameObject buildWallObject;
+
+    // Map creator stuff
     [SerializeField] public List<RoadPoint> points = new List<RoadPoint>();
     [SerializeField] public float handleRadius = 0.5f;
     [SerializeField] public RoadPoint RoadPointpreFab;
