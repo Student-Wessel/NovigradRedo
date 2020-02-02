@@ -10,6 +10,8 @@ public class ShapeEditor : Editor
     private ShapeCreator shapeCreator;
     private RoadPoint lastSelected = null;
 
+    private List<GameObject> houseList = null;
+
     public List<Vector3> points;
     bool needsRepaint;
     void OnEnable()
@@ -77,6 +79,8 @@ public class ShapeEditor : Editor
 
         if (GUILayout.Button("Generate houses"))
         {
+            shapeCreator.DeleteCity();
+
             generateRoads();
             generateHouses();
         }
@@ -233,6 +237,7 @@ public class ShapeEditor : Editor
 
     private void generateHouses()
     {
+        houseList = new List<GameObject>();
         for (int i = 0; i < shapeCreator.NeigthborList.Count; i++)
         {
             Vector3 point = shapeCreator.NeigthborList[i][0].transform.position;
@@ -249,24 +254,91 @@ public class ShapeEditor : Editor
             roadNormalInverse.Normalize();
 
             System.Random rand = new System.Random();
-            Vector3Int randomSize = new Vector3Int(rand.Next(3, 6), rand.Next(2, 7), rand.Next(2, 2));
-            Vector3Int randomSize2 = new Vector3Int(rand.Next(3, 6), rand.Next(2, 7), rand.Next(2, 2));
+            Vector3Int randomSize = new Vector3Int(rand.Next(shapeCreator.minSize.x, shapeCreator.maxSize.x), rand.Next(shapeCreator.minSize.y, shapeCreator.maxSize.y), rand.Next(shapeCreator.minSize.z, shapeCreator.maxSize.z));
+            Vector3Int randomSize2 = new Vector3Int(rand.Next(shapeCreator.minSize.x, shapeCreator.maxSize.x), rand.Next(shapeCreator.minSize.y, shapeCreator.maxSize.y), rand.Next(shapeCreator.minSize.z, shapeCreator.maxSize.z));
 
-            Vector3 housePos = pointBetween + (roadNormal * 3);
-            Vector3 housePos2 = pointBetween + (roadNormalInverse * 3);
+            Vector3 housePos = pointBetween + (roadNormal * (randomSize.z + 1));
+            Vector3 housePos2 = pointBetween + (roadNormalInverse * (randomSize2.z + 1));
 
-            GenerateBuilding(housePos, new Vector3(0, 0, 0), pointBetween, randomSize);
-            GenerateBuilding(housePos2, new Vector3(0, 0, 0), pointBetween, randomSize2);
+            GenerateBuilding(housePos, new Vector3(0, 0, 0), pointBetween, randomSize, i + 1);
+            GenerateBuilding(housePos2, new Vector3(0, 0, 0), pointBetween, randomSize2, (i + 1) * -1);
+        }
+        if (shapeCreator.RemoveOverlapping) 
+            DeleteOverlappingHouses();
+    }
+
+    void DeleteOverlappingHouses()
+    {
+        while (AreThereHousesOverlapping())
+        {
+
+            for (int i = 0; i < houseList.Count; i++)
+            {
+                GameObject houseA = houseList[i];
+                for (int j = 0; j < houseList.Count; j++)
+                {
+                    GameObject houseB = houseList[j];
+
+                    if (houseA.name == houseB.name)
+                    {
+                        continue;
+                    }
+
+                    Bounds boundA = new Bounds();
+                    Bounds boundB = new Bounds();
+
+                    boundA.center = houseA.transform.position;
+                    boundB.center = houseB.transform.position;
+                    boundA.extents = houseA.GetComponent<BoxCollider>().bounds.extents;
+                    boundB.extents = houseB.GetComponent<BoxCollider>().bounds.extents;
+
+                    if (boundA.Intersects(boundB))
+                    {
+                        DestroyImmediate(houseB);
+                        houseList.RemoveAt(j);
+                        break;
+                    }
+
+                }
+            }
         }
     }
 
+    private bool AreThereHousesOverlapping()
+    {
+        for (int i = 0; i < houseList.Count; i++)
+        {
+            GameObject houseA = houseList[i];
+            for (int j = 0; j < houseList.Count; j++)
+            {
+                GameObject houseB = houseList[j];
 
+                if (houseA.name == houseB.name)
+                    continue;
+
+
+                Bounds boundA = new Bounds();
+                Bounds boundB = new Bounds();
+
+                boundA.center = houseA.transform.position;
+                boundB.center = houseB.transform.position;
+                boundA.extents = houseA.GetComponent<BoxCollider>().bounds.extents;
+                boundB.extents = houseB.GetComponent<BoxCollider>().bounds.extents;                
+
+                if (boundA.Intersects(boundB))
+                    return true;
+
+            }
+        }
+
+        return false;
+    }
 
     // Tom's building gen V2
 
 
     // If you want to create a random sized building you pass in a Vector3Int that is (0,0,0)
-    private void GenerateBuilding(Vector3 startPos, Vector3 startRot,Vector3 middlePoint, Vector3Int buildSize)
+    private void GenerateBuilding(Vector3 startPos, Vector3 startRot,Vector3 middlePoint, Vector3Int buildSize,int index)
     {
         System.Random rand = new System.Random();
 
@@ -277,9 +349,9 @@ public class ShapeEditor : Editor
 
         if (buildSize.x == 0 && buildSize.y == 0 && buildSize.z == 0)
         {
-            sizeX = rand.Next(2, 4);
-            sizeZ = rand.Next(2, 4);
-            floors = rand.Next(2, 4);
+            sizeX = rand.Next(shapeCreator.minSize.x, shapeCreator.maxSize.x);
+            sizeZ = rand.Next(shapeCreator.minSize.z, shapeCreator.maxSize.z);
+            floors = rand.Next(shapeCreator.minSize.y, shapeCreator.maxSize.y);
         }
         else
         {
@@ -290,7 +362,7 @@ public class ShapeEditor : Editor
 
         GameObject randomWindow = shapeCreator.randomWindows[rand.Next(shapeCreator.randomWindows.Length)];
 
-        GameObject myParent = new GameObject("House");
+        GameObject myParent = new GameObject("House:"+ index.ToString());
         GameObject roof = new GameObject("Roof");
         GameObject Walls = new GameObject("Walls");
         BoxCollider houseCollider = (BoxCollider)myParent.gameObject.AddComponent(typeof(BoxCollider));
@@ -310,19 +382,51 @@ public class ShapeEditor : Editor
                     shapeCreator.buildWallObject = randomWindow;
                 }
 
+                // A door needs to be somewhere placed in here
                 if (shapeCreator.buildWallObject != null)
                 {
+                    if (floor == 0)
+                    {
+                        if (x == 0)
+                        {
+                            GameObject WallX = Instantiate(shapeCreator.buildWallObject);
+                            GameObject WallZ = Instantiate(shapeCreator.defaultDoorway);
+                            WallX.transform.transform.localPosition = new Vector3(x, floor, 0);
+                            WallX.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
-                    GameObject WallX = Instantiate(shapeCreator.buildWallObject);
-                    GameObject WallZ = Instantiate(shapeCreator.buildWallObject);
-                    WallX.transform.transform.localPosition = new Vector3(x, floor, 0);
-                    WallX.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                            WallZ.transform.transform.localPosition = new Vector3(x, floor, sizeZ);
+                            WallZ.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-                    WallZ.transform.transform.localPosition = new Vector3(x, floor, sizeZ);
-                    WallZ.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                            WallX.transform.SetParent(Walls.transform);
+                            WallZ.transform.SetParent(Walls.transform);
+                        } 
+                        else
+                        {
+                            GameObject WallX = Instantiate(shapeCreator.buildWallObject);
+                            GameObject WallZ = Instantiate(shapeCreator.buildWallObject);
+                            WallX.transform.transform.localPosition = new Vector3(x, floor, 0);
+                            WallX.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
-                    WallX.transform.SetParent(Walls.transform);
-                    WallZ.transform.SetParent(Walls.transform);
+                            WallZ.transform.transform.localPosition = new Vector3(x, floor, sizeZ);
+                            WallZ.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+                            WallX.transform.SetParent(Walls.transform);
+                            WallZ.transform.SetParent(Walls.transform);
+                        }
+                    }
+                    else
+                    {
+                        GameObject WallX = Instantiate(shapeCreator.buildWallObject);
+                        GameObject WallZ = Instantiate(shapeCreator.buildWallObject);
+                        WallX.transform.transform.localPosition = new Vector3(x, floor, 0);
+                        WallX.transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+                        WallZ.transform.transform.localPosition = new Vector3(x, floor, sizeZ);
+                        WallZ.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+                        WallX.transform.SetParent(Walls.transform);
+                        WallZ.transform.SetParent(Walls.transform);
+                    }
                 }
 
 
@@ -625,12 +729,14 @@ public class ShapeEditor : Editor
 
         myParent.transform.position = startPos;
         myParent.transform.LookAt(middlePoint);
+        myParent.transform.position += new Vector3(0, 0.5f, 0);
 
         myParent.transform.SetParent(shapeCreator.CityParent.transform);
 
         houseCollider.size = new Vector3(sizeX, floors + 1, sizeZ);
-        Vector3 center = myParent.transform.position - new Vector3(0.5f, 0, 0.5f);
-        houseCollider.center = center + new Vector3(sizeX / 2, floors / 2, sizeZ / 2);
+        houseCollider.center = new Vector3((((float)sizeX) / 2)-0.5f, ((float)floors) / 2, ((float)sizeZ) / 2);
+
+        houseList.Add(myParent);
     }
 
 

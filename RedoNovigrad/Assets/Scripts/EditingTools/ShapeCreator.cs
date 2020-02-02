@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ShapeCreator : MonoBehaviour
 {
-    // Building gen stuff
+    // Building gen stu
+    [SerializeField]
+    public Vector3Int minSize = new Vector3Int(2,2,2);
+    [SerializeField]
+    public Vector3Int maxSize = new Vector3Int(4, 4, 4);
     [SerializeField]
     public GameObject[] randomWindows = new GameObject[5];
     [SerializeField]
@@ -32,9 +36,9 @@ public class ShapeCreator : MonoBehaviour
     [SerializeField] public Material redMat;
 
     public List<List<RoadPoint>> NeigthborList = new List<List<RoadPoint>>();
+    [SerializeField] public bool RemoveOverlapping = true;
 
-    [System.NonSerialized] public GameObject CityParent = new GameObject();
-    
+    [System.NonSerialized] public GameObject CityParent;
 
     public void removeAllPoints()
     {

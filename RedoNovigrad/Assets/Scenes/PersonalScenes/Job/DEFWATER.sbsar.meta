@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abc0fcd87f3515747bdeba3becdedbc4
+guid: 35d7665d374e747eb98d7e333276c60a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -10,17 +10,17 @@ ScriptedImporter:
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
   version: 24
   mGraphInstanceData:
-  - graphLabel: Hay
-    prototypeName: Hay
+  - graphLabel: Water
+    prototypeName: Water
     graphDescIndex: 0
     generateAllOutputs: 0
     generateMipMaps: 1
-    preset: " <sbspreset pkgurl=\"pkg://Hay\" label=\"\" >\n  <presetinput identifier=\"$outputsize\"
-      uid=\"3665480780\" type=\"8\" value=\"9,9\" />\n </sbspreset>\n"
+    preset: " <sbspreset pkgurl=\"pkg://Water\" label=\"\" >\n  <presetinput identifier=\"$outputsize\"
+      uid=\"2577741012\" type=\"8\" value=\"9,9\" />\n </sbspreset>\n"
     shaderName: HDRP/LitTessellation
     materialProperties:
       shader: {fileID: 4800000, guid: 756bac9090102564582875f4c7e30202, type: 3}
-      shaderKeywords: _HEIGHTMAP _MASKMAP _NORMALMAP
+      shaderKeywords: _BASECOLORMAP _HEIGHTMAP _MASKMAP _NORMALMAP
       lightmapFlags: 4
       texEnvs:
       - name: _AnisotropyMap
@@ -28,7 +28,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BaseColorMap
-        texture: {instanceID: 0}
+        texture: {fileID: -3194638689795231313, guid: 35d7665d374e747eb98d7e333276c60a,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BentNormalMap
@@ -56,7 +57,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _HeightMap
-        texture: {fileID: 319741391425430063, guid: abc0fcd87f3515747bdeba3becdedbc4,
+        texture: {fileID: -8462275795431063193, guid: 35d7665d374e747eb98d7e333276c60a,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -69,16 +70,17 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -3194638689795231313, guid: 35d7665d374e747eb98d7e333276c60a,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MaskMap
-        texture: {fileID: -2339444369329867876, guid: abc0fcd87f3515747bdeba3becdedbc4,
+        texture: {fileID: -8230192194011901575, guid: 35d7665d374e747eb98d7e333276c60a,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _NormalMap
-        texture: {fileID: -6145348632098547159, guid: abc0fcd87f3515747bdeba3becdedbc4,
+        texture: {fileID: 7819104051483148457, guid: 35d7665d374e747eb98d7e333276c60a,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -397,17 +399,17 @@ ScriptedImporter:
       - name: _UVMappingMaskEmissive
         color: {r: 1, g: 0, b: 0, a: 0}
     outputDescList:
-    - outputName: diffuse
-      identifier: BaseColour
-      usageName: diffuse
-      channelStr: diffuse
-      label: BaseColour
-      usage: 0
+    - outputName: baseColor
+      identifier: basecolor
+      usageName: baseColor
+      channelStr: baseColor
+      label: Base Color
+      usage: 1
       bImage: 1
       bNumerical: 0
       bLinear: 0
     - outputName: normal
-      identifier: Normal
+      identifier: normal
       usageName: normal
       channelStr: normal
       label: Normal
@@ -415,17 +417,8 @@ ScriptedImporter:
       bImage: 1
       bNumerical: 0
       bLinear: 1
-    - outputName: height
-      identifier: Height
-      usageName: height
-      channelStr: height
-      label: Height
-      usage: 9
-      bImage: 1
-      bNumerical: 0
-      bLinear: 1
     - outputName: roughness
-      identifier: Roughness
+      identifier: roughness
       usageName: roughness
       channelStr: roughness
       label: Roughness
@@ -434,20 +427,20 @@ ScriptedImporter:
       bNumerical: 0
       bLinear: 1
     - outputName: metallic
-      identifier: Metalic
+      identifier: metallic
       usageName: metallic
       channelStr: metallic
-      label: Metalic
+      label: Metallic
       usage: 28
       bImage: 1
       bNumerical: 0
       bLinear: 1
-    - outputName: ambientOcclusion
-      identifier: AmbientOcclusion
-      usageName: ambientOcclusion
-      channelStr: ambientOcclusion
-      label: AmbientOcclusion
-      usage: 5
+    - outputName: height
+      identifier: height
+      usageName: height
+      channelStr: height
+      label: Height
+      usage: 9
       bImage: 1
       bNumerical: 0
       bLinear: 1
@@ -461,19 +454,14 @@ ScriptedImporter:
       bNumerical: 0
       bLinear: 1
     texturePackingList:
-    - targetName: diffuse
+    - targetName: baseColor
       components:
-      - sourceName: diffuse
+      - sourceName: baseColor
         from: 0
         to: 3
     - targetName: normal
       components:
       - sourceName: normal
-        from: 0
-        to: 3
-    - targetName: height
-      components:
-      - sourceName: height
         from: 0
         to: 3
     - targetName: roughness
@@ -486,9 +474,9 @@ ScriptedImporter:
       - sourceName: smoothness
         from: 0
         to: 3
-    - targetName: ambientOcclusion
+    - targetName: height
       components:
-      - sourceName: ambientOcclusion
+      - sourceName: height
         from: 0
         to: 3
     - targetName: mask
@@ -496,7 +484,7 @@ ScriptedImporter:
       - sourceName: metallic
         from: 0
         to: 0
-      - sourceName: ambientOcclusion
+      - sourceName: mask
         from: 0
         to: 1
       - sourceName: mask
@@ -506,31 +494,27 @@ ScriptedImporter:
         from: 0
         to: 3
     textureParameters:
-    - textureName: Hay - diffuse
+    - textureName: Water - baseColor
       wrapMode: 0
       filterMode: 1
       aniso: 1
-    - textureName: Hay - normal
+    - textureName: Water - normal
       wrapMode: 0
       filterMode: 1
       aniso: 1
-    - textureName: Hay - height
+    - textureName: Water - roughness
       wrapMode: 0
       filterMode: 1
       aniso: 1
-    - textureName: Hay - roughness
+    - textureName: Water - metallic
       wrapMode: 0
       filterMode: 1
       aniso: 1
-    - textureName: Hay - metallic
+    - textureName: Water - height
       wrapMode: 0
       filterMode: 1
       aniso: 1
-    - textureName: Hay - ambientOcclusion
-      wrapMode: 0
-      filterMode: 1
-      aniso: 1
-    - textureName: Hay - mask
+    - textureName: Water - mask
       wrapMode: 0
       filterMode: 1
       aniso: 1
@@ -545,9 +529,10 @@ ScriptedImporter:
       textureFormatMode: 0
       normalCompressed: 0
       bGenerateOnLoad: 1
-    material: {fileID: -7730860259980811877, guid: abc0fcd87f3515747bdeba3becdedbc4,
+    material: {fileID: -8559731736929697333, guid: 35d7665d374e747eb98d7e333276c60a,
       type: 3}
     generatedTextures:
-    - {fileID: -6145348632098547159, guid: abc0fcd87f3515747bdeba3becdedbc4, type: 3}
-    - {fileID: 319741391425430063, guid: abc0fcd87f3515747bdeba3becdedbc4, type: 3}
-    - {fileID: -2339444369329867876, guid: abc0fcd87f3515747bdeba3becdedbc4, type: 3}
+    - {fileID: -3194638689795231313, guid: 35d7665d374e747eb98d7e333276c60a, type: 3}
+    - {fileID: 7819104051483148457, guid: 35d7665d374e747eb98d7e333276c60a, type: 3}
+    - {fileID: -8462275795431063193, guid: 35d7665d374e747eb98d7e333276c60a, type: 3}
+    - {fileID: -8230192194011901575, guid: 35d7665d374e747eb98d7e333276c60a, type: 3}
