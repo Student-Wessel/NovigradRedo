@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_water
-  m_Shader: {fileID: -6465566751694194690, guid: 6ee9df352cb7a8743a70b329cb127518,
+  m_Name: WaterSwagWell
+  m_Shader: {fileID: -6465566751694194690, guid: 90c2161bd1617ad45b34bd65448bad30,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -23,16 +23,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_7ECEF3D1:
-        m_Texture: {fileID: 2800000, guid: 69c4009195564bc4abed0797665e0c56, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5db3f811450d1fd4b99583e1a8aac759, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_22AC3F95: 0.78
-    - Vector1_2C121460: 7.35
-    - Vector1_3215BE8: 0.3
+    - Vector1_22AC3F95: 1
+    - Vector1_2C121460: 1
+    - Vector1_3215BE8: 1
     - Vector1_84B0C7F3: 1
-    - Vector1_9E4DDBD5: 0.8
-    - Vector1_BE6AEE33: 0.96
+    - Vector1_9E4DDBD5: 100
+    - Vector1_BE6AEE33: 0.1
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0
@@ -67,8 +67,8 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - Color_31C6A9E4: {r: 0.4575472, g: 0.87243456, b: 1, a: 0}
-    - Color_F8ED9307: {r: 0.125712, g: 0.14239947, b: 0.23584908, a: 0}
-    - Vector2_4E67FFC8: {r: 1, g: 1, b: 0, a: 0}
+    - Color_31C6A9E4: {r: 0, g: 0.024371045, b: 0.2924528, a: 0}
+    - Color_F8ED9307: {r: 0.12028304, g: 0.12225195, b: 0.16037738, a: 0}
+    - Vector2_4E67FFC8: {r: 1, g: 1, b: 1, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

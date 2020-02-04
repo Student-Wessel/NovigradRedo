@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &799714976131330947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 799714976131330949}
+  - component: {fileID: 799714976131330946}
+  m_Layer: 0
+  m_Name: HousePreFab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &799714976131330949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799714976131330947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &799714976131330946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799714976131330947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee81c4b63f6b6184daa7dc93577572ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSize: {x: 2, y: 2, z: 2}
+  maxSize: {x: 4, y: 4, z: 4}
+  randomWindows:
+  - {fileID: 5363704688672130789, guid: 6892e3e789c8d9a4da2de73cf4cf6a62, type: 3}
+  - {fileID: 3565448238963899269, guid: 1a11c99a91ed61f43aa02ebe371cd15d, type: 3}
+  - {fileID: 5117863281032642037, guid: 409dc8ad94142534b8b3c6121e7d2054, type: 3}
+  defaultDoorway: {fileID: 2675539992050920625, guid: 7a0c32ef835c38b4bb65384b9c7c8207,
+    type: 3}
+  defaultWall: {fileID: 5117863281032642037, guid: 409dc8ad94142534b8b3c6121e7d2054,
+    type: 3}
+  defaultRoof: {fileID: 9197137945057432471, guid: fee9a35ed9c56204f8d1bcae2044d053,
+    type: 3}
+  roofPiece: {fileID: 9197137945057432471, guid: fee9a35ed9c56204f8d1bcae2044d053,
+    type: 3}
+  Koob: {fileID: 342147471977299670, guid: fdd90742b469f034d917140349dd5bfa, type: 3}
+  roofCenterPiece: {fileID: 7208645760882176721, guid: 5ae355d7684136d41bbb4410e06bc6ae,
+    type: 3}
+  _roofOffset: -1
+  buildWallObject: {fileID: 5117863281032642037, guid: 409dc8ad94142534b8b3c6121e7d2054,
+    type: 3}

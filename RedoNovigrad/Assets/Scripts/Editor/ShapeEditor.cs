@@ -10,7 +10,7 @@ public class ShapeEditor : Editor
     private ShapeCreator shapeCreator;
     private RoadPoint lastSelected = null;
 
-    private List<GameObject> houseList = null;
+    private List<HousePrefabRedo> houseList = null;
 
     public List<Vector3> points;
     bool needsRepaint;
@@ -83,6 +83,8 @@ public class ShapeEditor : Editor
 
             generateRoads();
             generateHouses();
+            PlaceCityElements();
+            SetAllCityBuildingsStatic();
         }
     }
 
@@ -105,14 +107,54 @@ public class ShapeEditor : Editor
 
     void CreateRoad(Vector3 roadPoint, Vector3 startPoint, float roadLength, GameObject p_parent)
     {
-        GameObject roadPart = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        roadPart.transform.localScale = new Vector3(1.9f, 0.1f, roadLength + 1.1f);
+        GameObject roadPart = Instantiate(shapeCreator.path);
+        //roadPart.transform.localScale = new Vector3(1.9f, 0.1f, roadLength + 1.1f);
+        roadPart.transform.localScale += new Vector3(0, 0, roadLength + 0.6f);
         roadPart.transform.position = roadPoint;
         roadPart.transform.LookAt(startPoint);
         roadPart.name = "Road part";
         roadPart.transform.SetParent(p_parent.transform);
     }
 
+
+    void PlaceCityElements()
+    {
+        System.Random rand = new System.Random();
+        PlaceWells(rand);
+        PlaceLanterns(rand);
+    }
+
+
+    void PlaceWells(System.Random rand)
+    {
+        int totalPoint = shapeCreator.points.Count;
+        int wellAmout = totalPoint / 10;
+
+        for (int i = 0; i < wellAmout; i++)
+        {
+            GameObject well = Instantiate(shapeCreator.wellPreFab);
+            well.transform.position = shapeCreator.points[rand.Next(totalPoint)].transform.position;
+            well.transform.SetParent(shapeCreator.CityParent.transform);
+        }
+    }
+
+    void PlaceLanterns(System.Random rand)
+    {
+        int totalPoint = shapeCreator.points.Count;
+        int lanternsAmount = totalPoint / 3;
+
+        for (int i = 0; i < lanternsAmount; i++)
+        {
+            int randomIndex = rand.Next(shapeCreator.NeigthborList.Count);
+
+            GameObject lantern = Instantiate(shapeCreator.lanternPreFab);
+            lantern.transform.position = shapeCreator.NeigthborList[randomIndex][0].transform.position;
+            lantern.transform.LookAt(shapeCreator.NeigthborList[randomIndex][1].transform.position);
+            lantern.transform.position += lantern.transform.right;
+            lantern.transform.Rotate(0, -90, 0);
+            lantern.transform.SetParent(shapeCreator.CityParent.transform);
+        }
+    }
 
     void DrawDots()
     {
@@ -237,7 +279,7 @@ public class ShapeEditor : Editor
 
     private void generateHouses()
     {
-        houseList = new List<GameObject>();
+        houseList = new List<HousePrefabRedo>();
         for (int i = 0; i < shapeCreator.NeigthborList.Count; i++)
         {
             Vector3 point = shapeCreator.NeigthborList[i][0].transform.position;
@@ -274,10 +316,10 @@ public class ShapeEditor : Editor
 
             for (int i = 0; i < houseList.Count; i++)
             {
-                GameObject houseA = houseList[i];
+                GameObject houseA = houseList[i].gameObject;
                 for (int j = 0; j < houseList.Count; j++)
                 {
-                    GameObject houseB = houseList[j];
+                    GameObject houseB = houseList[j].gameObject;
 
                     if (houseA.name == houseB.name)
                     {
@@ -308,10 +350,10 @@ public class ShapeEditor : Editor
     {
         for (int i = 0; i < houseList.Count; i++)
         {
-            GameObject houseA = houseList[i];
+            GameObject houseA = houseList[i].gameObject;
             for (int j = 0; j < houseList.Count; j++)
             {
-                GameObject houseB = houseList[j];
+                GameObject houseB = houseList[j].gameObject;
 
                 if (houseA.name == houseB.name)
                     continue;
@@ -332,6 +374,23 @@ public class ShapeEditor : Editor
         }
 
         return false;
+    }
+
+    private void SetAllCityBuildingsStatic()
+    {
+        foreach (Transform child in shapeCreator.CityParent.transform)
+        {
+            SetObjectStaticAndChilderen(child);
+        }
+    }
+
+    private void SetObjectStaticAndChilderen(Transform thisObject)
+    {
+        thisObject.gameObject.isStatic = true;
+        foreach(Transform child in thisObject)
+        {
+            SetObjectStaticAndChilderen(child);
+        }
     }
 
     // Tom's building gen V2
@@ -362,7 +421,9 @@ public class ShapeEditor : Editor
 
         GameObject randomWindow = shapeCreator.randomWindows[rand.Next(shapeCreator.randomWindows.Length)];
 
-        GameObject myParent = new GameObject("House:"+ index.ToString());
+        HousePrefabRedo myParent = Instantiate(shapeCreator.houseContainer);
+        myParent.minSize = shapeCreator.minSize;
+        myParent.maxSize = shapeCreator.maxSize;
         GameObject roof = new GameObject("Roof");
         GameObject Walls = new GameObject("Walls");
         BoxCollider houseCollider = (BoxCollider)myParent.gameObject.AddComponent(typeof(BoxCollider));
@@ -385,8 +446,10 @@ public class ShapeEditor : Editor
                 // A door needs to be somewhere placed in here
                 if (shapeCreator.buildWallObject != null)
                 {
+                    // We need to place a door somewhere on the first floor.
                     if (floor == 0)
                     {
+                        // We place the door as the first object
                         if (x == 0)
                         {
                             GameObject WallX = Instantiate(shapeCreator.buildWallObject);
@@ -743,7 +806,7 @@ public class ShapeEditor : Editor
     void HandleInput(Event guiEvent)
     {
         Ray mouseRay = HandleUtility.GUIPointToWorldRay(guiEvent.mousePosition);
-        float drawPlaneHeight = 0;
+        float drawPlaneHeight = shapeCreator.terrainHeight;
         float distToDrawPlane = (drawPlaneHeight - mouseRay.origin.y) / mouseRay.direction.y;
         Vector3 mousePosition = mouseRay.GetPoint(distToDrawPlane);
 

@@ -6,6 +6,8 @@ public class ShapeCreator : MonoBehaviour
 {
     // Building gen stu
     [SerializeField]
+    public HousePrefabRedo houseContainer;
+    [SerializeField]
     public Vector3Int minSize = new Vector3Int(2,2,2);
     [SerializeField]
     public Vector3Int maxSize = new Vector3Int(4, 4, 4);
@@ -31,7 +33,11 @@ public class ShapeCreator : MonoBehaviour
     // Map creator stuff
     [SerializeField] public List<RoadPoint> points = new List<RoadPoint>();
     [SerializeField] public float handleRadius = 0.5f;
+    [SerializeField] public float terrainHeight = 22;
     [SerializeField] public RoadPoint RoadPointpreFab;
+    [SerializeField] public GameObject path;
+    [SerializeField] public GameObject wellPreFab;
+    [SerializeField] public GameObject lanternPreFab;
     [SerializeField] public Material whiteMat;
     [SerializeField] public Material redMat;
 
